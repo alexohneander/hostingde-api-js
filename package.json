@@ -1,0 +1,43 @@
+{
+  "name": "hostingde-api-js",
+  "version": "0.0.1",
+  "description": "NodeJS/TypeScript Client Library for hosting.de API",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "ts-mocha tests/**/*.test.ts",
+    "coverage": "nyc npm test",
+    "lint": "eslint \"**\\*.ts\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexohneander/hostingde-api-node.git"
+  },
+  "keywords": [
+    "hosting-de",
+    "node",
+    "typescript",
+    "api",
+    "client"
+  ],
+  "author": "Alex Wellnitz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alexohneander/hostingde-api-node/issues"
+  },
+  "homepage": "https://github.com/alexohneander/hostingde-api-node#readme",
+  "devDependencies": {
+    "@types/chai": "^4.3.4",
+    "@types/mocha": "^10.0.1",
+    "@typescript-eslint/eslint-plugin": "^5.51.0",
+    "@typescript-eslint/parser": "^5.51.0",
+    "chai": "^4.3.7",
+    "eslint": "^8.33.0",
+    "mocha": "^10.2.0",
+    "nyc": "^15.1.0",
+    "ts-mocha": "^10.0.0"
+  },
+  "dependencies": {
+    "typescript": "^4.9.5"
+  }
+}
