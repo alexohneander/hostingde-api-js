@@ -8,7 +8,8 @@
     "build": "tsc",
     "test": "ts-mocha tests/**/*.test.ts",
     "coverage": "nyc npm test",
-    "lint": "eslint \"**\\*.ts\""
+    "lint": "npx rome check src/",
+    "format": "npx rome format src/ --write"
   },
   "repository": {
     "type": "git",
@@ -37,6 +38,7 @@
     "eslint": "^8.33.0",
     "mocha": "^10.2.0",
     "nyc": "^15.1.0",
+    "rome": "^11.0.0",
     "ts-mocha": "^10.0.0"
   },
   "dependencies": {
