@@ -5,7 +5,7 @@ import { Filter } from "./types/request_filter";
 import { Sort } from "./types/request_sort";
 
 export default class ClientDNS extends Client{
-    Location:string = 'https://secure.hosting.de/api/dns/v1/json';
+    Location:string = this.Url + '/dns/v1/json';
 
     constructor(url:string, token:string, limit:number){
         super(url,token,limit);
@@ -21,7 +21,6 @@ export default class ClientDNS extends Client{
         }
 
         const res = await PostRequest(req, this.Location + '/zoneConfigsFind');
-        console.log(res);
         return res;
     }
 
@@ -35,7 +34,6 @@ export default class ClientDNS extends Client{
         }
 
         const res = await PostRequest(req, this.Location + '/zonesFind');
-        console.log(res);
         return res;
     }
 
