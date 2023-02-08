@@ -1,8 +1,9 @@
 import Client from './client';
 import { PostRequest } from './helpers/http';
 import { ClientRequest } from './types/request';
-import { Filter } from './types/request_filter';
-import { Sort } from './types/request_sort';
+import { Filter } from './types/filter';
+import { Sort } from './types/sort';
+import { FindRecordsResult } from './types/dns/responses/find_records_result';
 
 export default class ClientDNS extends Client {
 	Location: string = `${this.Url}/dns/v1/json`;
@@ -47,11 +48,32 @@ export default class ClientDNS extends Client {
 		return res;
 	}
 
-	public CreateZone() {}
+	public async FindRecords(
+		filter?: Filter,
+		limit: number = 10,
+		page: number = 1,
+		sort?: Sort,
+	) {
+		const req: ClientRequest = {
+			authToken: this.Token,
+			limit: limit,
+			page: page,
+			filter: filter,
+			sort: sort,
+		};
 
-	public RecreateZone() {}
+		const res: FindRecordsResult = await PostRequest(
+			req,
+			`${this.Location}/recordsFind`,
+		);
+		return res;
+	}
 
-	public UpdateZone() {}
+	// public CreateZones() {}
 
-	public DeleteZone() {}
+	// public RecreateZone() {}
+
+	// public UpdateZone() {}
+
+	// public DeleteZone() {}
 }
