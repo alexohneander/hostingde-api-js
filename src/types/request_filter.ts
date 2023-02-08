@@ -1,4 +1,4 @@
 export type Filter = {
-    Field: string,
-    Value: string
-}
+	Field: string;
+	Value: string;
+};
