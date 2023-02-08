@@ -1,5 +1,5 @@
-import { Filter } from './request_filter';
-import { Sort } from './request_sort';
+import { Filter } from './filter';
+import { Sort } from './sort';
 
 export type ClientRequest = {
 	authToken: string;
