@@ -12,12 +12,7 @@ export default class ClientDNS extends Client {
 		super(url, token, limit);
 	}
 
-	public async FindZoneConfigs(
-		filter?: Filter,
-		limit: number = 50,
-		page: number = 1,
-		sort?: Sort,
-	) {
+	public async FindZoneConfigs(filter?: Filter, limit: number = 50, page: number = 1, sort?: Sort) {
 		const req: ClientRequest = {
 			authToken: this.Token,
 			limit: limit,
@@ -30,12 +25,7 @@ export default class ClientDNS extends Client {
 		return res;
 	}
 
-	public async FindZones(
-		filter?: Filter,
-		limit: number = 50,
-		page: number = 1,
-		sort?: Sort,
-	) {
+	public async FindZones(filter?: Filter, limit: number = 50, page: number = 1, sort?: Sort) {
 		const req: ClientRequest = {
 			authToken: this.Token,
 			limit: limit,
@@ -48,12 +38,7 @@ export default class ClientDNS extends Client {
 		return res;
 	}
 
-	public async FindRecords(
-		filter?: Filter,
-		limit: number = 10,
-		page: number = 1,
-		sort?: Sort,
-	) {
+	public async FindRecords(filter?: Filter, limit: number = 10, page: number = 1, sort?: Sort) {
 		const req: ClientRequest = {
 			authToken: this.Token,
 			limit: limit,
@@ -62,10 +47,7 @@ export default class ClientDNS extends Client {
 			sort: sort,
 		};
 
-		const res: FindRecordsResult = await PostRequest(
-			req,
-			`${this.Location}/recordsFind`,
-		);
+		const res: FindRecordsResult = await PostRequest(req, `${this.Location}/recordsFind`);
 		return res;
 	}
 

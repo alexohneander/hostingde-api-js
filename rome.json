@@ -11,11 +11,11 @@
     "formatWithErrors": false,
     "indentStyle": "tab",
     "indentSize": 2,
-    "lineWidth": 80,
+    "lineWidth": 120,
     "ignore": []
   },
-  "javascript":{
-    "formatter":{
+  "javascript": {
+    "formatter": {
       "quoteStyle": "single"
     }
   }
