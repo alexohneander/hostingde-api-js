@@ -4,6 +4,8 @@ import { ClientRequest } from './types/request';
 import { Filter } from './types/filter';
 import { Sort } from './types/sort';
 import { FindRecordsResult } from './types/dns/responses/find_records_result';
+import { FindZoneConfigsResult } from './types/dns/responses/find_zone_configs_result';
+import { FindZonesResult } from './types/dns/responses/find_zones_result';
 
 export default class ClientDNS extends Client {
 	Location: string = `${this.Url}/dns/v1/json`;
@@ -21,7 +23,7 @@ export default class ClientDNS extends Client {
 			sort: sort,
 		};
 
-		const res = await PostRequest(req, `${this.Location}/zoneConfigsFind`);
+		const res: FindZoneConfigsResult = await PostRequest(req, `${this.Location}/zoneConfigsFind`);
 		return res;
 	}
 
@@ -34,7 +36,7 @@ export default class ClientDNS extends Client {
 			sort: sort,
 		};
 
-		const res = await PostRequest(req, `${this.Location}/zonesFind`);
+		const res: FindZonesResult = await PostRequest(req, `${this.Location}/zonesFind`);
 		return res;
 	}
 
