@@ -1,6 +1,15 @@
 # Hosting.de SDK for JavaScript
 A simple and easy to use client for the Hosting.de API
 
+#### Supported API Services
+ - DNS (in process)
+ - Machine (planned)
+ - Database (planned)
+ - Domain (planned)
+ - SSL (not planned)
+ - E-Mail (not planned)
+ - Webhosting (not planned)
+
 ## Installation
 ```bash
 npm i hostingde-api-js
