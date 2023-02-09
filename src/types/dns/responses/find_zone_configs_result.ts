@@ -1,9 +1,9 @@
 import { ResponseError } from '../../error';
-import { DNSRecord } from '../record';
+import { ZoneConfig } from '../zone_config';
 
-export type FindRecordsResult = {
+export type FindZoneConfigsResult = {
 	response: {
-		data: [DNSRecord];
+		data: [ZoneConfig];
 		limit: number;
 		page: number;
 		totalEntries: number;
