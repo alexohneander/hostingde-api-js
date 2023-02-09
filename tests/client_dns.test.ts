@@ -1,4 +1,5 @@
 import { ClientDNS } from '../src';
+import { Filter } from '../src/types/filter';
 import { expect } from 'chai';
 
 require('dotenv').config();
@@ -55,6 +56,7 @@ describe('hosting.de SDK DNS Client', () => {
 		let limit = 10;
 
 		const client = new ClientDNS(url, token, limit);
+
 		let result = await client.FindRecords();
 
 		expect(result.status).to.equal('success');
@@ -69,5 +71,22 @@ describe('hosting.de SDK DNS Client', () => {
 		expect(result.response.data[0]).to.have.property('ttl');
 		expect(result.response.data[0]).to.have.property('type');
 		expect(result.response.data[0]).to.have.property('zoneConfigId');
+	});
+
+	it("FindRecords, get status 'success' and filter for A-Records", async () => {
+		let url = Url;
+		let token = Token;
+		let limit = 10;
+
+		const client = new ClientDNS(url, token, limit);
+
+		let filter:Filter = {
+			field:'recordType',
+			value: 'A'
+		}
+		let result = await client.FindRecords(filter);
+
+		expect(result.status).to.equal('success');
+		expect(result.response.data[0].type).to.equal('A');
 	});
 });
