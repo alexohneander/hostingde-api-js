@@ -11,6 +11,11 @@
     "lint": "npx rome check src/",
     "format": "npx rome format src/ --write"
   },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/alexohneander/hostingde-api-js.git"
