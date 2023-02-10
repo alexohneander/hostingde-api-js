@@ -105,6 +105,8 @@ describe('hosting.de SDK DNS Client', () => {
 		expect(result.response).to.have.property('records');
 	});
 
+	delay(1000);
+
 	it("FindZones without Token and get status 'error'", async () => {
 		let url = Url;
 		let token = '';
