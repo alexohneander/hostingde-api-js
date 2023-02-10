@@ -16,6 +16,8 @@ import { DNSRecord } from './types/dns/record';
 import { DNSSecOptions } from './types/dns/dns_sec_options';
 import { CreateZoneRequest } from './types/dns/requests/create_zone_request';
 import { CreateZoneResult } from './types/dns/responses/create_zone_result';
+import { Zone } from './types/dns/zone';
+import { UpdateZoneRequest } from './types/dns/requests/update_zone_request';
 
 export default class ClientDNS extends Client {
 	Location: string = `${this.Url}/dns/v1/json`;
@@ -25,6 +27,14 @@ export default class ClientDNS extends Client {
 	}
 
 	// ZONES
+	/**
+	 *
+	 * @param filter
+	 * @param limit
+	 * @param page
+	 * @param sort
+	 * @returns FindZonesResult
+	 */
 	public async FindZones(filter?: Filter, limit: number = 50, page: number = 1, sort?: Sort) {
 		const req: DNSFindRequest = {
 			authToken: this.Token,
@@ -38,6 +48,15 @@ export default class ClientDNS extends Client {
 		return res;
 	}
 
+	/**
+	 *
+	 * @param zoneConfig
+	 * @param records
+	 * @param nameserverSetId
+	 * @param useDefaultNameserverSet
+	 * @param dnsSecOptions
+	 * @returns CreateZoneResult
+	 */
 	public async CreateZone(
 		zoneConfig: ZoneConfig,
 		records: DNSRecord[],
@@ -58,6 +77,15 @@ export default class ClientDNS extends Client {
 		return res;
 	}
 
+	/**
+	 *
+	 * @param zoneConfig
+	 * @param records
+	 * @param nameserverSetId
+	 * @param useDefaultNameserverSet
+	 * @param dnsSecOptions
+	 * @returns CreateZoneResult
+	 */
 	public async RecreateZone(
 		zoneConfig: ZoneConfig,
 		records: DNSRecord[],
@@ -78,7 +106,44 @@ export default class ClientDNS extends Client {
 		return res;
 	}
 
+	/**
+	 *
+	 * @param zoneConfig
+	 * @param recordsToAdd
+	 * @param recordsToModify
+	 * @param recordsToDelete
+	 * @param dnsSecOptions
+	 * @returns CreateZoneResult
+	 */
+	public async UpdateZone(
+		zoneConfig: ZoneConfig,
+		recordsToAdd: DNSRecord[] = [],
+		recordsToModify: DNSRecord[] = [],
+		recordsToDelete: DNSRecord[] = [],
+		dnsSecOptions?: DNSSecOptions,
+	) {
+		const req: UpdateZoneRequest = {
+			authToken: this.Token,
+			zoneConfig: zoneConfig,
+			recordsToAdd: recordsToAdd,
+			recordsToModify: recordsToModify,
+			recordsToDelete: recordsToDelete,
+			dnsSecOptions: dnsSecOptions,
+		};
+
+		const res: CreateZoneResult = await PostRequest(req, `${this.Location}/zoneUpdate`);
+		return res;
+	}
+
 	// ZONECONFIGS
+	/**
+	 *
+	 * @param filter
+	 * @param limit
+	 * @param page
+	 * @param sort
+	 * @returns FindZoneConfigsResult
+	 */
 	public async FindZoneConfigs(filter?: Filter, limit: number = 50, page: number = 1, sort?: Sort) {
 		const req: DNSFindRequest = {
 			authToken: this.Token,
@@ -93,6 +158,14 @@ export default class ClientDNS extends Client {
 	}
 
 	// RECORDS
+	/**
+	 *
+	 * @param filter
+	 * @param limit
+	 * @param page
+	 * @param sort
+	 * @returns FindRecordsResult
+	 */
 	public async FindRecords(filter?: Filter, limit: number = 10, page: number = 1, sort?: Sort) {
 		const req: DNSFindRequest = {
 			authToken: this.Token,
@@ -107,6 +180,14 @@ export default class ClientDNS extends Client {
 	}
 
 	// TEMPLATES
+	/**
+	 *
+	 * @param filter
+	 * @param limit
+	 * @param page
+	 * @param sort
+	 * @returns FindTemplatesResult
+	 */
 	public async FindTemplates(filter?: Filter, limit: number = 10, page: number = 1, sort?: Sort) {
 		const req: DNSFindRequest = {
 			authToken: this.Token,
@@ -120,6 +201,12 @@ export default class ClientDNS extends Client {
 		return res;
 	}
 
+	/**
+	 *
+	 * @param dnsTemplate
+	 * @param recordTemplates
+	 * @returns CreateTemplateResult
+	 */
 	public async CreateTemplate(dnsTemplate: Template, recordTemplates: RecordTemplate[]) {
 		const req: CreateTemplateRequest = {
 			authToken: this.Token,
@@ -131,6 +218,7 @@ export default class ClientDNS extends Client {
 		return res;
 	}
 
+	// TODO: Add Response Type
 	public async DeleteTemplate(templateId: string, templateName?: string) {
 		const req = {
 			authToken: this.Token,
