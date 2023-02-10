@@ -1,6 +1,4 @@
-import { ClientRequest } from '../types/dns/requests/dns_find_request';
-
-export async function GetRequest(req: ClientRequest, endpoint: string) {
+export async function GetRequest(req: object, endpoint: string) {
 	try {
 		const response = await fetch(endpoint, {
 			method: 'GET',
