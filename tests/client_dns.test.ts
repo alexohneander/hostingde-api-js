@@ -3,6 +3,8 @@ import { Filter } from '../src/types/filter';
 import { expect } from 'chai';
 import { Template } from '../src/types/dns/template';
 import { RecordTemplate } from '../src/types/dns/record_template';
+import { ZoneConfig } from '../src/types/dns/zone_config';
+import { DNSRecord } from '../src/types/dns/record';
 
 require('dotenv').config();
 
@@ -27,6 +29,80 @@ describe('hosting.de SDK DNS Client', () => {
 		let result = await client.FindZones();
 
 		expect(result.status).to.equal('success');
+	});
+
+	it("CreateZone, get not status 'error' and get a valid Zone Object", async () => {
+		let url = Url;
+		let token = Token;
+		let limit = 10;
+
+		const client = new ClientDNS(url, token, limit);
+
+		let zoneConfig: ZoneConfig = {
+			name: 'test.de',
+			type: 'NATIVE',
+			emailAddress: 'admin@test.de',
+		};
+
+		let records: DNSRecord[] = [
+			{
+				name: 'www.test.de',
+				type: 'A',
+				content: '172.27.171.106',
+				ttl: 86000,
+			},
+			{
+				name: 'test.de',
+				type: 'MX',
+				content: 'smtp.test.de',
+				ttl: 86000,
+				priority: 0,
+			},
+		];
+
+		let result = await client.CreateZone(zoneConfig, records, undefined, true);
+
+		expect(result.status).to.not.equal('error');
+		expect(result.response).to.have.property('zoneConfig');
+		expect(result.response).to.have.property('records');
+	});
+
+	delay(1000);
+
+	it("RecreateZone, get not status 'error' and get a valid Zone Object", async () => {
+		let url = Url;
+		let token = Token;
+		let limit = 10;
+
+		const client = new ClientDNS(url, token, limit);
+
+		let zoneConfig: ZoneConfig = {
+			name: 'test.de',
+			type: 'NATIVE',
+			emailAddress: 'admin@test.de',
+		};
+
+		let records: DNSRecord[] = [
+			{
+				name: 'www.test.de',
+				type: 'A',
+				content: '172.0.0.106',
+				ttl: 86000,
+			},
+			{
+				name: 'test.de',
+				type: 'MX',
+				content: 'smtp.test.de',
+				ttl: 86000,
+				priority: 0,
+			},
+		];
+
+		let result = await client.RecreateZone(zoneConfig, records, undefined, true);
+
+		expect(result.status).to.not.equal('error');
+		expect(result.response).to.have.property('zoneConfig');
+		expect(result.response).to.have.property('records');
 	});
 
 	it("FindZones without Token and get status 'error'", async () => {
@@ -100,7 +176,7 @@ describe('hosting.de SDK DNS Client', () => {
 		const client = new ClientDNS(url, token, limit);
 
 		let template: Template = {
-			name: 'default-loadbalancing',
+			name: 'default-testing',
 		};
 
 		let records: RecordTemplate[] = [
@@ -138,14 +214,25 @@ describe('hosting.de SDK DNS Client', () => {
 		let token = Token;
 		let limit = 10;
 
-		const client = new ClientDNS(url, token, limit);	
-		const findRes = await client.FindTemplates();
+		const client = new ClientDNS(url, token, limit);
+
+		let filter: Filter = {
+			field: 'templateName',
+			value: 'default-testing',
+		};
+
+		const findRes = await client.FindTemplates(filter);
 		const defaultTemplate: Template = findRes.response.data[0];
 
-		if (defaultTemplate.id != null){
+		if (defaultTemplate.id != null) {
 			let result = await client.DeleteTemplate(defaultTemplate.id);
 			expect(result.status).to.equal('success');
-		} 
-	
+		}
 	});
 });
+
+function delay(interval) {
+	return it('should delay', (done) => {
+		setTimeout(() => done(), interval);
+	}).timeout(interval + 100); // The extra 100ms should guarantee the test will not fail due to exceeded timeout
+}
