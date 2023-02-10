@@ -1,4 +1,4 @@
-import { ClientRequest } from '../types/request';
+import { ClientRequest } from '../types/dns/requests/dns_find_request';
 
 export async function GetRequest(req: ClientRequest, endpoint: string) {
 	try {
