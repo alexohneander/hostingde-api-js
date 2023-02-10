@@ -1,53 +1,50 @@
 {
-  "name": "hostingde-api-js",
-  "version": "0.0.7",
-  "description": "NodeJS/TypeScript Client Library for hosting.de API",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "scripts": {
-    "build": "tsc",
-    "test": "ts-mocha tests/**/*.test.ts",
-    "coverage": "nyc npm test",
-    "lint": "npx rome check src/",
-    "format": "npx rome format src/ --write"
-  },
-  "files": [
-    "dist",
-    "LICENSE",
-    "README.md"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/alexohneander/hostingde-api-js.git"
-  },
-  "keywords": [
-    "hosting-de",
-    "node",
-    "typescript",
-    "api",
-    "client"
-  ],
-  "author": "Alex Wellnitz",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/alexohneander/hostingde-api-js/issues"
-  },
-  "homepage": "https://github.com/alexohneander/hostingde-api-js#readme",
-  "devDependencies": {
-    "@types/chai": "^4.3.4",
-    "@types/mocha": "^10.0.1",
-    "@types/node": "^18.13.0",
-    "@typescript-eslint/eslint-plugin": "^5.51.0",
-    "@typescript-eslint/parser": "^5.51.0",
-    "chai": "^4.3.7",
-    "eslint": "^8.33.0",
-    "mocha": "^10.2.0",
-    "nyc": "^15.1.0",
-    "rome": "^11.0.0",
-    "ts-mocha": "^10.0.0"
-  },
-  "dependencies": {
-    "dotenv": "^16.0.3",
-    "typescript": "^4.9.5"
-  }
+    "name": "hostingde-api-js",
+    "version": "0.0.7",
+    "description": "NodeJS/TypeScript Client Library for hosting.de API",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "scripts": {
+        "build": "tsc",
+        "test": "ts-mocha tests/**/*.test.ts",
+        "coverage": "nyc npm test",
+        "lint": "npx rome check src/",
+        "format": "npx rome format src/ --write"
+    },
+    "files": [
+        "dist",
+        "LICENSE",
+        "README.md"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/alexohneander/hostingde-api-js.git"
+    },
+    "keywords": [
+        "hosting-de",
+        "node",
+        "typescript",
+        "api",
+        "client"
+    ],
+    "author": "Alex Wellnitz",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/alexohneander/hostingde-api-js/issues"
+    },
+    "homepage": "https://github.com/alexohneander/hostingde-api-js#readme",
+    "devDependencies": {
+        "@types/chai": "^4.3.4",
+        "@types/mocha": "^10.0.1",
+        "@types/node": "^18.13.0",
+        "chai": "^4.3.7",
+        "mocha": "^10.2.0",
+        "nyc": "^15.1.0",
+        "rome": "^11.0.0",
+        "ts-mocha": "^10.0.0"
+    },
+    "dependencies": {
+        "dotenv": "^16.0.3",
+        "typescript": "^4.9.5"
+    }
 }
