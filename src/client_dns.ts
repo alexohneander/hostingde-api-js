@@ -18,6 +18,9 @@ import { CreateZoneRequest } from './types/dns/requests/create_zone_request';
 import { CreateZoneResult } from './types/dns/responses/create_zone_result';
 import { Zone } from './types/dns/zone';
 import { UpdateZoneRequest } from './types/dns/requests/update_zone_request';
+import { DeleteZoneRequest } from './types/dns/requests/delete_zone_request';
+import { RestoreZoneRequest } from './types/dns/requests/restore_zone_request';
+import { PurgeRestorableZoneRequest } from './types/dns/requests/purge_restorable_zone_request';
 
 export default class ClientDNS extends Client {
 	Location: string = `${this.Url}/dns/v1/json`;
@@ -132,6 +135,57 @@ export default class ClientDNS extends Client {
 		};
 
 		const res: CreateZoneResult = await PostRequest(req, `${this.Location}/zoneUpdate`);
+		return res;
+	}
+
+	/**
+	 *
+	 * @param zoneConfigId
+	 * @param zoneName
+	 * @returns status
+	 */
+	public async DeleteZone(zoneConfigId?: string, zoneName?: string) {
+		const req: DeleteZoneRequest = {
+			authToken: this.Token,
+			zoneConfigId: zoneConfigId,
+			zoneName: zoneName,
+		};
+
+		const res = await PostRequest(req, `${this.Location}/zoneDelete`);
+		return res;
+	}
+
+	/**
+	 *
+	 * @param zoneConfigId
+	 * @param zoneName
+	 * @returns status
+	 */
+	public async RestoreZone(zoneConfigId?: string, zoneName?: string) {
+		const req: RestoreZoneRequest = {
+			authToken: this.Token,
+			zoneConfigId: zoneConfigId,
+			zoneName: zoneName,
+		};
+
+		const res = await PostRequest(req, `${this.Location}/zoneRestore`);
+		return res;
+	}
+
+	/**
+	 *
+	 * @param zoneConfigId
+	 * @param zoneName
+	 * @returns status
+	 */
+	public async PurgeRestorableZone(zoneConfigId?: string, zoneName?: string) {
+		const req: PurgeRestorableZoneRequest = {
+			authToken: this.Token,
+			zoneConfigId: zoneConfigId,
+			zoneName: zoneName,
+		};
+
+		const res = await PostRequest(req, `${this.Location}/zonePurgeRestorable`);
 		return res;
 	}
 

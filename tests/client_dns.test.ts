@@ -5,6 +5,7 @@ import { Template } from '../src/types/dns/template';
 import { RecordTemplate } from '../src/types/dns/record_template';
 import { ZoneConfig } from '../src/types/dns/zone_config';
 import { DNSRecord } from '../src/types/dns/record';
+import { Zone } from '../src/types/dns/zone';
 
 require('dotenv').config();
 
@@ -103,6 +104,130 @@ describe('hosting.de SDK DNS Client', () => {
 		expect(result.status).to.not.equal('error');
 		expect(result.response).to.have.property('zoneConfig');
 		expect(result.response).to.have.property('records');
+	});
+
+	delay(1000);
+
+	it("UpdateZone, get not status 'error' and get a valid Zone Object", async () => {
+		let url = Url;
+		let token = Token;
+		let limit = 10;
+
+		const client = new ClientDNS(url, token, limit);
+
+		let zoneConfig: ZoneConfig = {
+			name: 'test.de',
+			type: 'NATIVE',
+			emailAddress: 'admin@test.de',
+			dnsSecMode: 'off',
+		};
+
+		let recordsToAdd: DNSRecord[] = [
+			{
+				name: 'update.test.de',
+				type: 'A',
+				content: '172.0.0.106',
+				ttl: 86000,
+			},
+		];
+
+		let result = await client.UpdateZone(zoneConfig, recordsToAdd);
+
+		expect(result.status).to.not.equal('error');
+		expect(result.response).to.have.property('zoneConfig');
+		expect(result.response).to.have.property('records');
+	});
+
+	delay(1000);
+
+	it("DeleteZone, get not status 'error'", async () => {
+		let url = Url;
+		let token = Token;
+		let limit = 10;
+
+		const client = new ClientDNS(url, token, limit);
+
+		let filter: Filter = {
+			field: 'zoneName',
+			value: 'test.de',
+		};
+
+		const findRes = await client.FindZones(filter);
+		const defaultZone: Zone = findRes.response.data[0];
+
+		if (defaultZone.zoneConfig?.id != null) {
+			let result = await client.DeleteZone(defaultZone.zoneConfig.id);
+			expect(result.status).to.not.equal('error');
+		}
+	});
+
+	delay(1000);
+
+	it("RestoreZone, get not status 'error'", async () => {
+		let url = Url;
+		let token = Token;
+		let limit = 10;
+
+		const client = new ClientDNS(url, token, limit);
+
+		let filter: Filter = {
+			field: 'zoneName',
+			value: 'test.de',
+		};
+
+		const findRes = await client.FindZones(filter);
+		const defaultZone: Zone = findRes.response.data[0];
+
+		if (defaultZone.zoneConfig?.id != null) {
+			let result = await client.RestoreZone(defaultZone.zoneConfig.id);
+			expect(result.status).to.not.equal('error');
+		}
+	});
+
+	delay(1000);
+
+	it("DeleteZone, get not status 'error'", async () => {
+		let url = Url;
+		let token = Token;
+		let limit = 10;
+
+		const client = new ClientDNS(url, token, limit);
+
+		let filter: Filter = {
+			field: 'zoneName',
+			value: 'test.de',
+		};
+
+		const findRes = await client.FindZones(filter);
+		const defaultZone: Zone = findRes.response.data[0];
+
+		if (defaultZone.zoneConfig?.id != null) {
+			let result = await client.DeleteZone(defaultZone.zoneConfig.id);
+			expect(result.status).to.not.equal('error');
+		}
+	});
+
+	delay(1000);
+
+	it("PurgeRestorableZone, get not status 'error'", async () => {
+		let url = Url;
+		let token = Token;
+		let limit = 10;
+
+		const client = new ClientDNS(url, token, limit);
+
+		let filter: Filter = {
+			field: 'zoneName',
+			value: 'test.de',
+		};
+
+		const findRes = await client.FindZones(filter);
+		const defaultZone: Zone = findRes.response.data[0];
+
+		if (defaultZone.zoneConfig?.id != null) {
+			let result = await client.PurgeRestorableZone(defaultZone.zoneConfig.id);
+			expect(result.status).to.not.equal('error');
+		}
 	});
 
 	delay(1000);
