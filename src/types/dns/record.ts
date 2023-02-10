@@ -1,5 +1,5 @@
 export type DNSRecord = {
-	id: string;
+	id?: string;
 	zoneId?: string;
 	recordTemplateId?: string;
 	name: string;

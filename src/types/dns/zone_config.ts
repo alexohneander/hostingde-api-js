@@ -2,7 +2,7 @@ import { SOAValues } from './soa_values';
 import { TemplateValues } from './template_values';
 
 export type ZoneConfig = {
-	id: string;
+	id?: string;
 	accountId?: string;
 	dnsServerGroupId?: string;
 	status?: string;
@@ -11,9 +11,9 @@ export type ZoneConfig = {
 	masterIp?: string;
 	type: string;
 	emailAddress?: string;
-	zoneTransferWhitelist?: Array<string>;
+	zoneTransferWhitelist?: string[];
 	lastChangeDate?: Date;
-	soaValues?: SOAValues; // TODO: Richtigen Datentypen anlegen
-	templateValues?: TemplateValues; // TODO: Richtigen Datentypen anlegen
+	soaValues?: SOAValues;
+	templateValues?: TemplateValues;
 	dnsSecMode?: string;
 };
