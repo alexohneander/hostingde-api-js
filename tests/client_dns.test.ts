@@ -1,6 +1,8 @@
 import { ClientDNS } from '../src';
 import { Filter } from '../src/types/filter';
 import { expect } from 'chai';
+import { Template } from '../src/types/dns/template';
+import { RecordTemplate } from '../src/types/dns/record_template';
 
 require('dotenv').config();
 
@@ -80,13 +82,70 @@ describe('hosting.de SDK DNS Client', () => {
 
 		const client = new ClientDNS(url, token, limit);
 
-		let filter:Filter = {
-			field:'recordType',
-			value: 'A'
-		}
+		let filter: Filter = {
+			field: 'recordType',
+			value: 'A',
+		};
 		let result = await client.FindRecords(filter);
 
 		expect(result.status).to.equal('success');
 		expect(result.response.data[0].type).to.equal('A');
+	});
+
+	it("CreateTemplate, get status 'success' and get a valid Template Object", async () => {
+		let url = Url;
+		let token = Token;
+		let limit = 10;
+
+		const client = new ClientDNS(url, token, limit);
+
+		let template: Template = {
+			name: 'default-loadbalancing',
+		};
+
+		let records: RecordTemplate[] = [
+			{
+				name: '##DOMAIN##',
+				type: 'A',
+				content: '10.0.0.148',
+				ttl: 3600,
+			},
+			{
+				name: '##DOMAIN##',
+				type: 'A',
+				content: '10.0.0.147',
+				ttl: 3600,
+			},
+			{
+				name: 'mail.##DOMAIN##',
+				type: 'A',
+				content: '10.0.0.150',
+				ttl: 10000,
+				priority: 10,
+			},
+		];
+
+		let result = await client.CreateTemplate(template, records);
+
+		expect(result.status).to.equal('success');
+		expect(result.response).to.have.property('name');
+		expect(result.response).to.have.property('accountId');
+		expect(result.response).to.have.property('id');
+	});
+
+	it("DeleteTemplate, get status 'success'", async () => {
+		let url = Url;
+		let token = Token;
+		let limit = 10;
+
+		const client = new ClientDNS(url, token, limit);	
+		const findRes = await client.FindTemplates();
+		const defaultTemplate: Template = findRes.response.data[0];
+
+		if (defaultTemplate.id != null){
+			let result = await client.DeleteTemplate(defaultTemplate.id);
+			expect(result.status).to.equal('success');
+		} 
+	
 	});
 });
