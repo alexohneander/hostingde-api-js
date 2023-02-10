@@ -26,7 +26,7 @@ export async function GetRequest(req: ClientRequest, endpoint: string) {
 	}
 }
 
-export async function PostRequest(req: ClientRequest, endpoint: string) {
+export async function PostRequest(req: object, endpoint: string) {
 	try {
 		const response = await fetch(endpoint, {
 			method: 'POST',
